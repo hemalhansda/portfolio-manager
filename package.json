@@ -20,5 +20,10 @@
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
   },
-  "private": true
+  "private": true,
+  "name": "portfolio-manager",
+  "version": "1.0.0",
+  "author": "Hemaal Taras Hansda",
+  "license": "MIT",
+  "description": ""
 }

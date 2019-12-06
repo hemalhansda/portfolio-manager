@@ -4,16 +4,21 @@ import {
     Text,
     View,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal,
+    TouchableHighlight,
+    Alert,
 } from 'react-native';
 import Project from './Project';
 import Rest from '../services/Rest';
+import CreateProject from './CreateProject';
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projectList: []
+            projectList: [],
+            modalVisible: false,
         };
     }
 
@@ -25,9 +30,23 @@ export default class Main extends React.Component {
         });
     }
 
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    }
+
     render() {
         return(
             <View style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                        this.setModalVisible(false);
+                    }}>
+                    <CreateProject />
+                </Modal>
                 <ScrollView style={styles.scrollContainer}>
                     {
                         this.state.projectList ? this.state.projectList.map((eachProject) => {
@@ -38,7 +57,11 @@ export default class Main extends React.Component {
                         }) : ''
                     }
                 </ScrollView>
-                <TouchableOpacity style={styles.addButton}>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.setModalVisible(true);
+                    }}
+                    style={styles.addButton}>
                     <Text style={styles.addButtonText}>
                         +
                     </Text>
