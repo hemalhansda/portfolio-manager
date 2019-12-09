@@ -13,13 +13,15 @@ import {
 } from 'react-native';
 
 import Textarea from 'react-native-textarea';
-
 import { Card } from 'react-native-shadow-cards';
 
 export default class CreateProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    handleChoosePhoto = async () => {
     }
 
     render() {
@@ -39,7 +41,20 @@ export default class CreateProject extends React.Component {
                         underlineColorAndroid={'transparent'}
                         placeholder="Enter the description"></Textarea>
                 </Card>
+                <Card style={styles.subFormTwo}>
+                    <View style={styles.imageButton}>
+                        <Button
+                            color="#454545"
+                            title="Upload Photo" onPress={() => this.handleChoosePhoto('gallery')} />
+                    </View>
+                    <View style={styles.imageButton}>
+                        <Button
+                            color="#454545"
+                            title="Camera" onPress={() => this.handleChoosePhoto('camera')} />
+                    </View>
+                </Card>
                 <Button
+                    color="#454545"
                     style={styles.submitButton}
                     title="Submit Project"
                     onPress={() => Alert.alert('Simple Button pressed')}
@@ -61,6 +76,15 @@ const styles = StyleSheet.create({
         marginBottom: 100,
         padding: 10,
         width: '100%',
+    },
+    subFormTwo: {
+        marginBottom: 100,
+        padding: 10,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 80,
     },
     titleInput: {
         backgroundColor: '#e8e8e8',
@@ -110,4 +134,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#333',
     },
+    imageButton: {
+        width: '40%',
+        margin: 5,
+    }
 });

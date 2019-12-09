@@ -20,7 +20,6 @@ export default class Project extends React.Component {
     }
 
     render() {
-        console.log('this: ', this.props.eachProject);
         return (
             <Card style={styles.note}>
                 <Text style={styles.noteText}>{this.props.eachProject.title}</Text>
