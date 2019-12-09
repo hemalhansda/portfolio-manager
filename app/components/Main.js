@@ -13,6 +13,8 @@ import Project from './Project';
 import Rest from '../services/Rest';
 import CreateProject from './CreateProject';
 
+import { Card } from 'react-native-shadow-cards';
+
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -57,15 +59,17 @@ export default class Main extends React.Component {
                         }) : ''
                     }
                 </ScrollView>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.setModalVisible(true);
-                    }}
-                    style={styles.addButton}>
-                    <Text style={styles.addButtonText}>
-                        +
-                    </Text>
-                </TouchableOpacity>
+                <Card style={styles.statusBar}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.setModalVisible(true);
+                        }}
+                        style={styles.addButton}>
+                        <Text style={styles.addButtonText}>
+                            +
+                        </Text>
+                    </TouchableOpacity>
+                </Card>
             </View>
         );
     }
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flex: 1,
-        marginBottom: 100,
+        marginBottom: 0,
         marginTop: 20,
     },
     footer: {
@@ -113,8 +117,8 @@ const styles = StyleSheet.create({
         right: '39%',
         bottom: 5,
         backgroundColor: '#454545',
-        width: 90,
-        height: 90,
+        width: 60,
+        height: 60,
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
@@ -123,5 +127,10 @@ const styles = StyleSheet.create({
     addButtonText: {
         color: '#fff',
         fontSize: 24
+    },
+    statusBar: {
+        backgroundColor: '#f5f5f5',
+        height: 50,
+        width: '100%',
     }
 });

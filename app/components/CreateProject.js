@@ -15,13 +15,34 @@ import {
 import Textarea from 'react-native-textarea';
 import { Card } from 'react-native-shadow-cards';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
 export default class CreateProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    handleChoosePhoto = async () => {
+    handleChoosePhoto = async (imageOpt) => {
+        if (imageOpt === 'gallery') {
+            ImagePicker.openPicker({
+                width: 300,
+                height: 400,
+                cropping: true
+            }).then(image => {
+                console.log(image);
+            });
+        } else if (imageOpt === 'camera') {
+            ImagePicker.openCamera({
+                width: 300,
+                height: 400,
+                cropping: true,
+              }).then(image => {
+                console.log(image);
+              });
+        } else {
+            Alert.alert('Failure! Can\'t do this operation right now.');
+        }
     }
 
     render() {
