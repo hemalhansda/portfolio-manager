@@ -14,6 +14,7 @@ import Rest from '../services/Rest';
 import CreateProject from './CreateProject';
 
 import { Card } from 'react-native-shadow-cards';
+import Placeholder from './Placeholder';
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -51,12 +52,12 @@ export default class Main extends React.Component {
                 </Modal>
                 <ScrollView style={styles.scrollContainer}>
                     {
-                        this.state.projectList ? this.state.projectList.map((eachProject) => {
+                        this.state.projectList.length ? this.state.projectList.map((eachProject) => {
                             return <Project 
                                 key={eachProject._id}
                                 eachProject={eachProject}
                             />
-                        }) : ''
+                        }) : <Placeholder />
                     }
                 </ScrollView>
                 <Card style={styles.statusBar}>
