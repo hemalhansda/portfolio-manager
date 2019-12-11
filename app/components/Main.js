@@ -15,6 +15,8 @@ import CreateProject from './CreateProject';
 
 import { Card } from 'react-native-shadow-cards';
 import Placeholder from './Placeholder';
+import Navbar from './Navbar';
+import { PermissionsAndroid } from 'react-native';
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -26,6 +28,7 @@ export default class Main extends React.Component {
     }
 
     componentDidMount() {
+        // this.requestPermissions();
         Rest.getAllProjects().then((res) => {
             this.setState({projectList: res.data.data});
         }).catch((err) => {
@@ -37,9 +40,76 @@ export default class Main extends React.Component {
         this.setState({modalVisible: visible});
     }
 
+    async requestPermissions() {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'Cool Photo App Camera Permission',
+              message:
+                'Cool Photo App needs access to your camera ' +
+                'so you can take awesome pictures.',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('You can use the camera');
+          } else {
+            console.log('Camera permission denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+        try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+              {
+                title: 'Cool Photo App Storage Permission',
+                message:
+                  'Cool Photo App needs access to your Storage ' +
+                  'so you can take awesome pictures.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              console.log('You can use the Storage');
+            } else {
+              console.log('Storage permission denied');
+            }
+          } catch (err) {
+            console.warn(err);
+          }
+          try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                title: 'Cool Photo App Storage Permission',
+                message:
+                  'Cool Photo App needs access to your camera ' +
+                  'so you can take awesome pictures.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              console.log('You can use the Storage');
+            } else {
+              console.log('Storage permission denied');
+            }
+          } catch (err) {
+            console.warn(err);
+          }
+    }
+
     render() {
         return(
             <View style={styles.container}>
+                <Navbar />
                 <Modal
                     animationType="slide"
                     transparent={false}
