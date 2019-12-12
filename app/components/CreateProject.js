@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Modal,
     TouchableHighlight,
+    ActivityIndicator,
     Alert,
     TextInput,
     Button,
@@ -15,8 +16,6 @@ import {
 
 import Textarea from 'react-native-textarea';
 import { Card } from 'react-native-shadow-cards';
-
-// import ImagePicker from 'react-native-image-crop-picker';
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -31,6 +30,7 @@ export default class CreateProject extends React.Component {
         this.state = {
             image: undefined,
             imageUri: undefined,
+            loader: false,
         };
     }
 
@@ -107,9 +107,10 @@ export default class CreateProject extends React.Component {
             description: this.state.description,
             image: this.state.imageUri
         };
-        console.log('query: ', query);
+        this.setState({loader: true});
         Rest.createProject(query).then((res) => {
-            console.log('res: ', res.data);
+            // console.log('res: ', res.data);
+            this.setState({loader: false});
             this.props.getAllProjects();
             this.props.modalSetter();
         }).catch(err => {
@@ -160,12 +161,16 @@ export default class CreateProject extends React.Component {
                     </Card>
                 </View>
                 <View style={styles.buttonCont}>
-                    <Button
-                        color="#454545"
-                        style={styles.submitButton}
-                        title="Submit Project"
-                        onPress={() => this.constructProject()}
-                        />
+                    {
+                        this.state.loader
+                        ? <ActivityIndicator size="large" color="#ba03fc" /> 
+                        : <Button
+                            color="#454545"
+                            style={styles.submitButton}
+                            title="Submit Project"
+                            onPress={() => this.constructProject()}
+                            />
+                    }
                 </View>
             </View>
         );
