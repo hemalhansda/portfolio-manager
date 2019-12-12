@@ -29,7 +29,7 @@ const Rest = {
         data.append('description', query.description);
         data.append('image', {
             uri: query.image,
-            name:'userProfile.jpeg',
+            name:'projectImage.jpeg',
             type:'image/jpeg'
         });
         return Axios.post(this.url + '/project', data, {

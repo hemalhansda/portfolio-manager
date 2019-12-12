@@ -22,7 +22,7 @@ export default class Project extends React.Component {
     render() {
         return (
             <Card style={styles.note}>
-                <Text style={styles.noteText}>{this.props.eachProject.title}</Text>
+                <Text style={styles.noteTextTitle}>{this.props.eachProject.title}</Text>
                 <Text style={styles.noteText}>
                     {this.props.eachProject.description}
                 </Text>
@@ -53,6 +53,13 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         borderLeftWidth: 10,
         borderLeftColor: '#454545',
+    },
+    noteTextTitle: {
+        paddingLeft: 20,
+        borderLeftWidth: 10,
+        borderLeftColor: '#454545',
+        fontSize: 14,
+        fontWeight: 'bold',
     },
     noteDelete: {
         backgroundColor: 'red',
