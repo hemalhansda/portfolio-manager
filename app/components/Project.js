@@ -27,9 +27,14 @@ export default class Project extends React.Component {
                     {this.props.eachProject.description}
                 </Text>
 
-                <TouchableOpacity onPress={this.props.deleteMethod} style={styles.noteDelete}>
-                    <Text style={styles.noteDeleteText}>Edit</Text>
-                </TouchableOpacity>
+                <View style={styles.controls}>
+                    <TouchableOpacity onPress={this.props.editMethod} style={styles.noteEdit}>
+                        <Text style={styles.innerTextBut}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.eachProject._id)} style={styles.noteDelete}>
+                        <Text style={styles.innerTextBut}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
             </Card>
         );
     }
@@ -50,16 +55,37 @@ const styles = StyleSheet.create({
         borderLeftColor: '#454545',
     },
     noteDelete: {
+        backgroundColor: 'red',
+        margin: 2,
+        width: 60,
+        height: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        fontWeight: 'bold',
+    },
+    noteEdit: {
+        backgroundColor: '#29B0b9',
+        margin: 2,
+        width: 60,
+        height: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        fontWeight: 'bold',
+    },
+    innerTextBut: {
+        color: 'white',
+    },
+    controls: {
+        flex: 1,
+        flexDirection: 'column',
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#29B0b9',
         padding: 10,
         top: 10,
         bottom: 10,
         right: 10,
-    },
-    noteDeleteText: {
-        color: 'white',
     }
 });

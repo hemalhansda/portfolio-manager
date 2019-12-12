@@ -46,6 +46,12 @@ export default class Main extends React.Component {
       this.setState({modalVisible: visible});
     }
 
+    deleteMethod = (id) => {
+      Rest.deleteProject({id: id}).then((res) => {
+        this.getAllProjects();
+      });
+    }
+
     async requestPermissions() {
         try {
           const granted = await PermissionsAndroid.request(
@@ -134,6 +140,8 @@ export default class Main extends React.Component {
                             return <Project 
                                 key={eachProject._id}
                                 eachProject={eachProject}
+                                editMethod={this.editMethod}
+                                deleteMethod={this.deleteMethod}
                             />
                         }) : <Placeholder />
                     }
