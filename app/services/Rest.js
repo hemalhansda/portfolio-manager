@@ -22,6 +22,14 @@ const Rest = {
     getAllProjects() {
         return Axios.get(this.url + '/getProject');
     },
+
+    createProject(query) {
+        return Axios.post(this.url + '/createProject', query, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
 };
 
 export default Rest;

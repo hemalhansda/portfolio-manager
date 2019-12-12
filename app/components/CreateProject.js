@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Image,
     ScrollView,
     TouchableOpacity,
     Modal,
@@ -21,11 +22,14 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
+import noPreview from '../assets/images/no-preview.png';
+
 export default class CreateProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: undefined
+            image: undefined,
+            imageUri: undefined,
         };
     }
 
@@ -68,10 +72,8 @@ export default class CreateProject extends React.Component {
           base64: true
         });
     
-        console.log(result);
-    
         if (!result.cancelled) {
-          this.setState({ image: result.uri });
+          this.setState({ image: result.base64, imageUri: result.uri });
         }
     };
 
@@ -84,10 +86,16 @@ export default class CreateProject extends React.Component {
           base64: true
         });
     
-        console.log(result);
-    
         if (!result.cancelled) {
-          this.setState({ image: result.uri });
+          this.setState({
+                image: result.base64,
+                imageUri: result.uri,
+                imageSrc: {
+                  uri: 'data:image/jpeg;base64,' + this.state.image
+                }
+            }, () => {
+              console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
+          });
         }
     };
 
@@ -133,24 +141,57 @@ export default class CreateProject extends React.Component {
                             title="Camera" onPress={() => this.handleChoosePhoto('camera')} />
                     </View>
                 </Card>
-                <Button
-                    color="#454545"
-                    style={styles.submitButton}
-                    title="Submit Project"
-                    onPress={() => Alert.alert('Simple Button pressed')}
-                    />
+                <View
+                    style={styles.imageCont}
+                    >
+                    <Card style={styles.cardImage}>
+                        <Image
+                            style={styles.previewImage}
+                            source={this.state.imageSrc ? this.state.imageSrc : noPreview} />
+                    </Card>
+                </View>
+                <View style={styles.buttonCont}>
+                    <Button
+                        color="#454545"
+                        style={styles.submitButton}
+                        title="Submit Project"
+                        onPress={() => Alert.alert('Simple Button pressed')}
+                        />
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    cardImage: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 190,
+        width: 160,
+    },
+    previewImage: {
+        height: 180,
+        width: 150,
+    },
+    imageCont: {
+        width: '100%',
+        position: 'absolute',
+        bottom: 130,
+        flex: 1,
+        flexDirection: 'row',
+        marginLeft: 20,
+        justifyContent: 'center',
+    },
     formContainer: {
         padding: 20,
         margin: 20,
         height: '95%',
         flex: 1,
         display: 'flex',
+        alignItems: 'center',
     },
     subForm: {
         marginBottom: 100,
@@ -197,7 +238,6 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 40,
         borderRadius: 5,
-        height: 100,
         position: 'absolute',
         bottom: 0,
     },
@@ -217,5 +257,17 @@ const styles = StyleSheet.create({
     imageButton: {
         width: '40%',
         margin: 5,
+    },
+    buttonCont: {
+        position: 'absolute',
+        width: 150,
+        height: 70,
+        bottom: 0,
+        margin: 'auto',
+        backgroundColor: '#454545',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
     }
 });
