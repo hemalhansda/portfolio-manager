@@ -29,15 +29,21 @@ export default class Main extends React.Component {
 
     componentDidMount() {
         // this.requestPermissions();
+        this.getAllProjects();
+    }
+
+    getAllProjects = () => {
+      this.setState({projectList: []}, () => {
         Rest.getAllProjects().then((res) => {
-            this.setState({projectList: res.data.data});
+          this.setState({projectList: res.data.data});
         }).catch((err) => {
-            console.log('err: ', err);
+          console.log('err: ', err);
         });
+      });
     }
 
     setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+      this.setState({modalVisible: visible});
     }
 
     async requestPermissions() {
@@ -115,10 +121,12 @@ export default class Main extends React.Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
                         this.setModalVisible(false);
                     }}>
-                    <CreateProject />
+                    <CreateProject
+                      getAllProjects={this.getAllProjects}
+                      modalSetter={() => this.setModalVisible(false)}
+                    />
                 </Modal>
                 <ScrollView style={styles.scrollContainer}>
                     {

@@ -24,9 +24,19 @@ const Rest = {
     },
 
     createProject(query) {
-        return Axios.post(this.url + '/createProject', query, {
+        let data = new FormData();
+        data.append('title', query.title);
+        data.append('description', query.description);
+        data.append('image', {
+            uri: query.image,
+            name:'userProfile.jpeg',
+            type:'image/jpeg'
+        });
+        return Axios.post(this.url + '/project', data, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data`
             }
         });
     },

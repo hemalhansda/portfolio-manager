@@ -23,6 +23,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
 import noPreview from '../assets/images/no-preview.png';
+import Rest from '../services/Rest';
 
 export default class CreateProject extends React.Component {
     constructor(props) {
@@ -34,26 +35,6 @@ export default class CreateProject extends React.Component {
     }
 
     handleChoosePhoto = async (imageOpt) => {
-        // if (imageOpt === 'gallery') {
-        //     ImagePicker.openPicker({
-        //         width: 300,
-        //         height: 400,
-        //         cropping: true
-        //     }).then(image => {
-        //         console.log(image);
-        //     });
-        // } else if (imageOpt === 'camera') {
-        //     ImagePicker.openCamera({
-        //         width: 300,
-        //         height: 400,
-        //         cropping: true,
-        //       }).then(image => {
-        //         console.log(image);
-        //       });
-        // } else {
-        //     Alert.alert('Failure! Can\'t do this operation right now.');
-        // }
-
         if (imageOpt === 'gallery') {
             this._pickImage();
         } else if (imageOpt === 'camera') {
@@ -73,7 +54,15 @@ export default class CreateProject extends React.Component {
         });
     
         if (!result.cancelled) {
-          this.setState({ image: result.base64, imageUri: result.uri });
+            this.setState({
+                image: result.base64,
+                imageUri: result.uri,
+                imageSrc: {
+                  uri: result.uri
+                }
+            }, () => {
+            //   console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
+            });
         }
     };
 
@@ -91,10 +80,10 @@ export default class CreateProject extends React.Component {
                 image: result.base64,
                 imageUri: result.uri,
                 imageSrc: {
-                  uri: 'data:image/jpeg;base64,' + this.state.image
+                  uri: result.uri
                 }
             }, () => {
-              console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
+            //   console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
           });
         }
     };
@@ -106,24 +95,44 @@ export default class CreateProject extends React.Component {
             alert('Sorry, we need camera roll permissions to make this work!');
           }
         }
-    }
+    };
 
     componentDidMount() {
         this.getPermissionAsync();
     }
+
+    constructProject = async () => {
+        const query = {
+            title: this.state.title,
+            description: this.state.description,
+            image: this.state.imageUri
+        };
+        console.log('query: ', query);
+        Rest.createProject(query).then((res) => {
+            console.log('res: ', res.data);
+            this.props.getAllProjects();
+            this.props.modalSetter();
+        }).catch(err => {
+            console.log('error: ', err);
+        });
+    };
 
     render() {
         return(
             <View style={styles.formContainer}>
                 <Card style={styles.subForm}>
                     <Text>T I T L E</Text>
-                    <TextInput style={styles.titleInput} placeholder="Enter the title"></TextInput>
+                    <TextInput 
+                        style={styles.titleInput}
+                        placeholder="Enter the title"
+                        onChangeText={(text) => this.setState({title: text})}
+                        ></TextInput>
                     <Text>D E S C R I P T I O N</Text>
                     <Textarea
                         containerStyle={styles.textareaContainer}
                         style={styles.textarea}
-                        onChangeText={this.onChange}
-                        defaultValue={this.state.text}
+                        onChangeText={(text) => this.setState({description: text})}
+                        // defaultValue={this.state.text}
                         maxLength={120}
                         placeholderTextColor={'#c7c7c7'}
                         underlineColorAndroid={'transparent'}
@@ -155,7 +164,7 @@ export default class CreateProject extends React.Component {
                         color="#454545"
                         style={styles.submitButton}
                         title="Submit Project"
-                        onPress={() => Alert.alert('Simple Button pressed')}
+                        onPress={() => this.constructProject()}
                         />
                 </View>
             </View>
@@ -178,11 +187,10 @@ const styles = StyleSheet.create({
     },
     imageCont: {
         width: '100%',
-        position: 'absolute',
-        bottom: 130,
+        position: 'relative',
+        bottom: 75,
         flex: 1,
         flexDirection: 'row',
-        marginLeft: 20,
         justifyContent: 'center',
     },
     formContainer: {
