@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Modal,
     TouchableHighlight,
+    RefreshControl,
     Alert,
 } from 'react-native';
 import Project from './Project';
@@ -24,6 +25,7 @@ export default class Main extends React.Component {
         this.state = {
             projectList: [],
             modalVisible: false,
+            refreshing: false,
         };
     }
 
@@ -35,7 +37,7 @@ export default class Main extends React.Component {
     getAllProjects = () => {
       this.setState({projectList: []}, () => {
         Rest.getAllProjects().then((res) => {
-          this.setState({projectList: res.data.data});
+          this.setState({projectList: res.data.data, refreshing: false});
         }).catch((err) => {
           console.log('err: ', err);
         });
@@ -118,6 +120,11 @@ export default class Main extends React.Component {
           }
     }
 
+    onRefresh = () => {
+      this.setState({refreshing: true});
+      this.getAllProjects();
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -134,7 +141,11 @@ export default class Main extends React.Component {
                       modalSetter={() => this.setModalVisible(false)}
                     />
                 </Modal>
-                <ScrollView style={styles.scrollContainer}>
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+                  }
+                  style={styles.scrollContainer}>
                     {
                         this.state.projectList.length ? this.state.projectList.map((eachProject) => {
                             return <Project 
@@ -143,7 +154,7 @@ export default class Main extends React.Component {
                                 editMethod={this.editMethod}
                                 deleteMethod={this.deleteMethod}
                             />
-                        }) : <Placeholder />
+                        }) : (this.state.refreshing ? <Text></Text> : <Placeholder />)
                     }
                 </ScrollView>
                 <Card style={styles.statusBar}>
