@@ -12,6 +12,7 @@
     "expo": "^35.0.0",
     "object-to-formdata": "^2.1.2",
     "react": "16.8.3",
+    "expo-image-picker": "^8.0.1",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-image-crop-picker": "^0.24.1",

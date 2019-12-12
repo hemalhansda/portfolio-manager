@@ -28,6 +28,9 @@
     },
     "android": {
       "package": "com.dolfox.porfoliomanager"
-    }
-  }
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "PortFolio Manager",
+  "name": "portfoliomanager"
 }

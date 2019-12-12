@@ -15,34 +15,93 @@ import {
 import Textarea from 'react-native-textarea';
 import { Card } from 'react-native-shadow-cards';
 
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
+
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 export default class CreateProject extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            image: undefined
+        };
     }
 
     handleChoosePhoto = async (imageOpt) => {
+        // if (imageOpt === 'gallery') {
+        //     ImagePicker.openPicker({
+        //         width: 300,
+        //         height: 400,
+        //         cropping: true
+        //     }).then(image => {
+        //         console.log(image);
+        //     });
+        // } else if (imageOpt === 'camera') {
+        //     ImagePicker.openCamera({
+        //         width: 300,
+        //         height: 400,
+        //         cropping: true,
+        //       }).then(image => {
+        //         console.log(image);
+        //       });
+        // } else {
+        //     Alert.alert('Failure! Can\'t do this operation right now.');
+        // }
+
         if (imageOpt === 'gallery') {
-            ImagePicker.openPicker({
-                width: 300,
-                height: 400,
-                cropping: true
-            }).then(image => {
-                console.log(image);
-            });
+            this._pickImage();
         } else if (imageOpt === 'camera') {
-            ImagePicker.openCamera({
-                width: 300,
-                height: 400,
-                cropping: true,
-              }).then(image => {
-                console.log(image);
-              });
+            this._pickCamera();
         } else {
             Alert.alert('Failure! Can\'t do this operation right now.');
         }
+    }
+
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [3, 4],
+          quality: 1,
+          base64: true
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          this.setState({ image: result.uri });
+        }
+    };
+
+    _pickCamera = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [3, 4],
+          quality: 1,
+          base64: true
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+          this.setState({ image: result.uri });
+        }
+    };
+
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+    }
+
+    componentDidMount() {
+        this.getPermissionAsync();
     }
 
     render() {
