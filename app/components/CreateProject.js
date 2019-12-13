@@ -31,6 +31,9 @@ export default class CreateProject extends React.Component {
             image: undefined,
             imageUri: undefined,
             loader: false,
+            errMsg: false,
+            description: '',
+            title: '',
         };
     }
 
@@ -59,7 +62,8 @@ export default class CreateProject extends React.Component {
                 imageUri: result.uri,
                 imageSrc: {
                   uri: result.uri
-                }
+                },
+                errMsg: false
             }, () => {
             //   console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
             });
@@ -81,7 +85,8 @@ export default class CreateProject extends React.Component {
                 imageUri: result.uri,
                 imageSrc: {
                   uri: result.uri
-                }
+                },
+                errMsg: false
             }, () => {
             //   console.log('image: ', 'data:image/jpeg;base64,' + this.state.image);
           });
@@ -102,6 +107,10 @@ export default class CreateProject extends React.Component {
     }
 
     constructProject = async () => {
+        if (!this.state.title.length || !this.state.description.length || !this.state.imageUri.length) {
+            this.setState({errMsg: true});
+            return;
+        }
         const query = {
             title: this.state.title,
             description: this.state.description,
@@ -126,13 +135,13 @@ export default class CreateProject extends React.Component {
                     <TextInput 
                         style={styles.titleInput}
                         placeholder="Enter the title"
-                        onChangeText={(text) => this.setState({title: text})}
+                        onChangeText={(text) => this.setState({title: text, errMsg: false})}
                         ></TextInput>
                     <Text>D E S C R I P T I O N</Text>
                     <Textarea
                         containerStyle={styles.textareaContainer}
                         style={styles.textarea}
-                        onChangeText={(text) => this.setState({description: text})}
+                        onChangeText={(text) => this.setState({description: text, errMsg: false})}
                         // defaultValue={this.state.text}
                         maxLength={120}
                         placeholderTextColor={'#c7c7c7'}
@@ -160,6 +169,9 @@ export default class CreateProject extends React.Component {
                             source={this.state.imageSrc ? this.state.imageSrc : noPreview} />
                     </Card>
                 </View>
+                {
+                    this.state.errMsg ? <Text style={styles.errMsgStyle}>Don't leave empty fields</Text> : <Text></Text>
+                }
                 <View style={styles.buttonCont}>
                     {
                         this.state.loader
@@ -282,5 +294,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
+    },
+    errMsgStyle: {
+        position: 'absolute',
+        color: 'red',
+        bottom: 80,
+        zIndex: 9999,
     }
 });

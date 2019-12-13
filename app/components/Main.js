@@ -23,9 +23,9 @@ export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projectList: [],
-            modalVisible: false,
-            refreshing: false,
+          projectList: [],
+          modalVisible: false,
+          refreshing: false,
         };
     }
 
