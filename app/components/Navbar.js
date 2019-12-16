@@ -23,10 +23,10 @@ export default class Navbar extends React.Component {
 
     render() {
         return (
-            <Card style={styles.navbarCont}>
+            <View style={styles.navbarCont}>
                 <Image source={mainIcon} style={styles.iconDesign}></Image>
                 <Text style={styles.textDesign}>Portfolio Manager</Text>
-            </Card>
+            </View>
         );
     }
 }
@@ -34,28 +34,19 @@ export default class Navbar extends React.Component {
 const styles = StyleSheet.create({
     navbarCont: {
         display: 'flex',
-        position: 'relative',
-        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
-        zIndex: 1000,
-        height: 90,
-        top: 0,
-        backgroundColor: '#f5f5f5',
-        width: '100%',
     },
     iconDesign: {
         height: 35,
         width: 35,
-        position: 'relative',
-        left: -170,
-        top: 28,
+        marginLeft: 17,
     },
     textDesign: {
-        position: 'relative',
-        left: -60,
-        bottom: 2,
         fontSize: 18,
-        color: '#575757',
+        marginLeft: 17,
+        color: 'white',
         fontWeight: 'bold',
     }
 });

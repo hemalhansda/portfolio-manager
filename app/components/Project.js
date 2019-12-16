@@ -28,7 +28,7 @@ export default class Project extends React.Component {
                 </Text>
 
                 <View style={styles.controls}>
-                    <TouchableOpacity onPress={this.props.editMethod} style={styles.noteEdit}>
+                    <TouchableOpacity onPress={() => this.props.editMethod(this.props.eachProject)} style={styles.noteEdit}>
                         <Text style={styles.innerTextBut}>Edit</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.eachProject._id)} style={styles.noteDelete}>

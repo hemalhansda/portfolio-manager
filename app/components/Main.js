@@ -20,6 +20,17 @@ import Navbar from './Navbar';
 import { PermissionsAndroid } from 'react-native';
 
 export default class Main extends React.Component {
+    static navigationOptions = {
+      title: 'Home',
+      headerTitle: () => <Navbar />,
+      headerStyle: {
+        backgroundColor: '#614e7a',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -125,10 +136,14 @@ export default class Main extends React.Component {
       this.getAllProjects();
     }
 
+    editMethod = (params) => {
+      this.props.navigation.navigate('Edit', params);
+    };
+
     render() {
         return(
             <View style={styles.container}>
-                <Navbar />
+                {/* <Navbar /> */}
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -149,10 +164,10 @@ export default class Main extends React.Component {
                     {
                         this.state.projectList.length ? this.state.projectList.map((eachProject) => {
                             return <Project 
-                                key={eachProject._id}
-                                eachProject={eachProject}
-                                editMethod={this.editMethod}
-                                deleteMethod={this.deleteMethod}
+                              key={eachProject._id}
+                              eachProject={eachProject}
+                              editMethod={this.editMethod}
+                              deleteMethod={this.deleteMethod}
                             />
                         }) : (this.state.refreshing ? <Text></Text> : <Placeholder />)
                     }
@@ -227,7 +242,7 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     statusBar: {
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#f3f0f5',
         height: 50,
         width: '100%',
     }
