@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 
 import { Card } from 'react-native-shadow-cards';
-import AngularImage from './../assets/svgs/angular.png';
+import editIcon from '../assets/images/edit.png';
+import deleteIcon from '../assets/images/delete.png';
 
 export default class Project extends React.Component {
     constructor(props) {
@@ -29,10 +30,14 @@ export default class Project extends React.Component {
 
                 <View style={styles.controls}>
                     <TouchableOpacity onPress={() => this.props.editMethod(this.props.eachProject)} style={styles.noteEdit}>
-                        <Text style={styles.innerTextBut}>Edit</Text>
+                        <View style={styles.innerTextBut}>
+                            <Image style={styles.iconStyle} source={editIcon}></Image>
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.eachProject._id)} style={styles.noteDelete}>
-                        <Text style={styles.innerTextBut}>Delete</Text>
+                        <View style={styles.innerTextBut}>
+                            <Image style={styles.iconStyle} source={deleteIcon}></Image>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </Card>
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     noteDelete: {
-        backgroundColor: 'red',
+        backgroundColor: '#f3f0f5',
         margin: 2,
         width: 60,
         height: '50%',
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     noteEdit: {
-        backgroundColor: '#29B0b9',
+        backgroundColor: '#f3f0f5',
         margin: 2,
         width: 60,
         height: '50%',
@@ -94,5 +99,13 @@ const styles = StyleSheet.create({
         top: 10,
         bottom: 10,
         right: 10,
+    },
+    iconStyle: {
+        height: 17,
+        width: 17,
+        margin: 2,
+        position: 'relative',
+        top: 0,
+        zIndex: 9999,
     }
 });
