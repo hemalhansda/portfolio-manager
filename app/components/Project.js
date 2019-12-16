@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
         paddingRight: 100,
         borderBottomWidth: 2,
         borderBottomColor: '#ededed',
-        margin: 20,
+        margin: 10,
+        minHeight: 120,
     },
     noteText: {
         paddingLeft: 20,
