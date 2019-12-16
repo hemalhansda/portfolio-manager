@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#ededed',
         margin: 10,
+        marginLeft: 20,
+        marginRight: 20,
         minHeight: 120,
     },
     noteText: {

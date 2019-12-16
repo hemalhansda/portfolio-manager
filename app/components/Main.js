@@ -192,6 +192,7 @@ export default class Main extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#f7f7f7',
     },
     header: {
         backgroundColor: '#E91E63',
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     statusBar: {
-        backgroundColor: '#f3f0f5',
+        backgroundColor: '#e2ddeb',
         height: 50,
         width: '100%',
     }
