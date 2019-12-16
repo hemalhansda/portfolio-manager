@@ -137,6 +137,7 @@ export default class Main extends React.Component {
     }
 
     editMethod = (params) => {
+      params.getAllProjects = () => this.getAllProjects();
       this.props.navigation.navigate('Edit', params);
     };
 
