@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     addButton: {
         position: 'absolute',
         zIndex: 11,
-        right: '39%',
+        right: '42%',
         bottom: 5,
         backgroundColor: '#454545',
         width: 60,
