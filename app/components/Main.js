@@ -18,6 +18,7 @@ import { Card } from 'react-native-shadow-cards';
 import Placeholder from './Placeholder';
 import Navbar from './Navbar';
 import { PermissionsAndroid } from 'react-native';
+import Footer from './Footer';
 
 export default class Main extends React.Component {
     static navigationOptions = {
@@ -106,17 +107,9 @@ export default class Main extends React.Component {
                         }) : (this.state.refreshing ? <Text></Text> : <Placeholder />)
                     }
                 </ScrollView>
-                <Card style={styles.statusBar}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.setModalVisible(true);
-                        }}
-                        style={styles.addButton}>
-                        <Text style={styles.addButtonText}>
-                            +
-                        </Text>
-                    </TouchableOpacity>
-                </Card>
+                <Footer 
+                  setModalVisible={(boolVal) => this.setModalVisible(boolVal)}
+                />
             </View>
         );
     }
@@ -159,26 +152,4 @@ const styles = StyleSheet.create({
         borderTopWidth: 2,
         borderTopColor: '#ededed',
     },
-    addButton: {
-        position: 'absolute',
-        zIndex: 11,
-        right: '42%',
-        bottom: 5,
-        backgroundColor: '#454545',
-        width: 60,
-        height: 60,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 8,
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 24
-    },
-    statusBar: {
-        backgroundColor: '#e2ddeb',
-        height: 50,
-        width: '100%',
-    }
 });
