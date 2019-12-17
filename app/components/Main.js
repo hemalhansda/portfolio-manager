@@ -14,7 +14,6 @@ import Project from './Project';
 import Rest from '../services/Rest';
 import CreateProject from './CreateProject';
 
-import { Card } from 'react-native-shadow-cards';
 import Placeholder from './Placeholder';
 import Navbar from './Navbar';
 import { PermissionsAndroid } from 'react-native';
