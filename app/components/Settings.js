@@ -2,8 +2,12 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    Dimensions,
 } from 'react-native';
+import Footer from './Footer';
+
+const { width, height } = Dimensions.get('window');
 
 export default class Settings extends React.Component {
     static navigationOptions = {
@@ -22,12 +26,20 @@ export default class Settings extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        this.footer.setState({settings: true, home: false});
+    }
+
     render() {
         return (
             <View>
-                <Text>
-                    Hello World
-                </Text>
+                <View style={{height: height - 55}}>
+                    
+                </View>
+                <Footer 
+                    ref={ref => this.footer = ref}
+                    navigation={this.props.navigation}
+                />
             </View>
         );
     }

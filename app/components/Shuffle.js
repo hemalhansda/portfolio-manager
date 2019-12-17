@@ -11,7 +11,11 @@ import {
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 
+import Footer from './Footer';
+
 const window = Dimensions.get('window');
+
+const { width, height } = Dimensions.get('window');
 
 
 const data = {
@@ -68,16 +72,26 @@ export default class Shuffle extends Component {
       fontWeight: 'bold',
     },
   };
+  
+  componentDidMount() {
+    this.footer.setState({shuffle: true, home: false});
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>React Native Sortable List</Text>
-        <SortableList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={data}
-          renderRow={this._renderRow} />
+        <View style={styles.extender}>
+          <Text style={styles.title}>React Native Sortable List</Text>
+          <SortableList
+            style={styles.list}
+            contentContainerStyle={styles.contentContainer}
+            data={data}
+            renderRow={this._renderRow} />
+        </View>
+        <Footer
+          ref={ref => this.footer = ref}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }
@@ -151,6 +165,9 @@ class Row extends Component {
 }
 
 const styles = StyleSheet.create({
+  extender: {
+    height: height - 55
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

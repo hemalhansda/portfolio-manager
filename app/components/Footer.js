@@ -17,11 +17,18 @@ import workIcon from '../assets/images/portfolio.png';
 import dashboardIcon from '../assets/images/dashboard.png';
 import shuffleIcon from '../assets/images/shuffle.png';
 import accountIcon from '../assets/images/gear-option.png';
+import homeIcon from '../assets/images/home.png';
 
 export default class Footer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            dashboard: false,
+            workOn: false,
+            shuffle: false,
+            settings: false,
+            home: true,
+        };
     }
 
     render() {
@@ -31,37 +38,47 @@ export default class Footer extends React.Component {
                     onPress={() => {
                         this.props.navigation.navigate('WorkOn');
                     }}
-                    style={styles.homeBtn}>
+                    style={[styles.homeBtn, (this.state.workOn ? styles.selected : null)]}>
                     <Image style={styles.icon} source={workIcon}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('Dashboard');
                     }}
-                    style={styles.introEditBtn}>
+                    style={[styles.introEditBtn, (this.state.dashboard ? styles.selected : null)]}>
                     <Image style={styles.icon} source={dashboardIcon}/>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props.setModalVisible(true);
-                    }}
-                    style={styles.addButton}>
-                    <Text style={styles.addButtonText}>
-                        +
-                    </Text>
-                </TouchableOpacity>
+                {
+                    this.state.home
+                    ? <TouchableOpacity
+                        onPress={() => {
+                            this.props.setModalVisible(true);
+                        }}
+                        style={styles.addButton}>
+                        <Text style={styles.addButtonText}>
+                            +
+                        </Text>
+                    </TouchableOpacity>
+                    : <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('Home');
+                        }}
+                        style={styles.addButton}>
+                        <Image style={styles.icon} source={homeIcon}/>
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('Shuffle');
                     }}
-                    style={styles.shuffleBtn}>
+                    style={[styles.shuffleBtn, (this.state.shuffle ? styles.selected : null)]}>
                     <Image style={styles.icon} source={shuffleIcon}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('Settings');
                     }}
-                    style={styles.accBtn}>
+                    style={[styles.accBtn, (this.state.settings ? styles.selected : null)]}>
                     <Image style={styles.icon} source={accountIcon}/>
                 </TouchableOpacity>
             </Card>
@@ -135,9 +152,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#e2ddeb',
         height: 50,
         width: '100%',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
     icon: {
         height: 20,
         width: 20,
+    },
+    selected: {
+        backgroundColor: '#f0edf5',
     }
 });
