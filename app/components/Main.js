@@ -21,6 +21,7 @@ import Footer from './Footer';
 import ViewProject from '../components/ViewProject';
 
 export default class Main extends React.Component {
+
     static navigationOptions = {
       title: 'Home',
       headerTitle: () => <Navbar />,
@@ -32,6 +33,7 @@ export default class Main extends React.Component {
         fontWeight: 'bold',
       },
     };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -43,6 +45,13 @@ export default class Main extends React.Component {
           overlay: false,
         };
     }
+
+    // componentDidUpdate() {
+    //   if (this.footer.state.refreshHome) {
+    //     this.footer.setState({refreshHome: false});
+    //     this.getAllProjects();
+    //   }
+    // }
 
     componentDidMount() {
       this.getAllProjects();
@@ -130,6 +139,7 @@ export default class Main extends React.Component {
                   this.state.overlay ? <View style={styles.overlay}></View> : null
                 }
                 <Footer 
+                  ref={ref => this.footer = ref}
                   setModalVisible={(boolVal) => this.setModalVisible(boolVal)}
                   navigation={this.props.navigation}
                 />

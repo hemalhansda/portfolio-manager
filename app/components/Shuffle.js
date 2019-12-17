@@ -43,7 +43,8 @@ export default class Shuffle extends Component {
     this.footer.setState({shuffle: true, home: false});
     Rest.getAllProjects().then((res) => {
       const projectList = res.data.data;
-      const projectListObj = this.convertArrayToObject(projectList, 'title');
+      const projectListObj = this.convertArrayToObject(projectList, '_id');
+      this.order = Object.keys(projectListObj);
       this.setState({projectListObj: projectListObj, loader: false});
     });
   }
@@ -58,6 +59,22 @@ export default class Shuffle extends Component {
     }, initialValue);
   };
 
+  orderShuffled = (key, currentOrder) => {
+    let shuffler = [];
+    let incOrder = 1;
+    currentOrder.forEach((id) => {
+      shuffler.push({
+        id,
+        order: incOrder++
+      });
+    });
+    const shuffleQuery = { orders: shuffler };
+    Rest.shuffleProject(shuffleQuery).then((res) => {
+      // console.log('res: ', res.data.data);
+      // this.footer.setState({refreshHome: true});
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -66,10 +83,14 @@ export default class Shuffle extends Component {
           {
             this.state.loader === false
             ? <SortableList
-              style={styles.list}
-              contentContainerStyle={styles.contentContainer}
-              data={this.state.projectListObj}
-              renderRow={this._renderRow} />
+                style={styles.list}
+                contentContainerStyle={styles.contentContainer}
+                data={this.state.projectListObj}
+                order={this.order}
+                renderRow={this._renderRow}
+                onReleaseRow={(key, currentOrder) => {
+                  this.orderShuffled(key, currentOrder);
+                }} />
             : <View style={styles.list}>
                 <Placeholder
                   styleContents={{ width: 350, margin: 10, height: 90, borderRadius: 5 }}

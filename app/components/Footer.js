@@ -28,6 +28,7 @@ export default class Footer extends React.Component {
             shuffle: false,
             settings: false,
             home: true,
+            refreshHome: false,
         };
     }
 

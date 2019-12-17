@@ -70,6 +70,10 @@ const Rest = {
 
     deleteProject(query) {
         return Axios.delete(this.url + '/deleteProject?id=' + query.id);
+    },
+
+    shuffleProject(query) {
+        return Axios.post(this.url + '/shuffleProject', query);
     }
 };
 
