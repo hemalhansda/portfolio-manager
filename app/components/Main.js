@@ -40,6 +40,7 @@ export default class Main extends React.Component {
           refreshing: false,
           viewProjectHandler: false,
           projectData: {},
+          overlay: false,
         };
     }
 
@@ -77,6 +78,10 @@ export default class Main extends React.Component {
       this.props.navigation.navigate('Edit', params);
     };
 
+    overlayHandler = (boolVal) => {
+      this.setState({overlay: boolVal});
+    };
+
     viewProject = (projectData) => {
       this.setState({projectData: projectData}, () => {
         this.projectModal.toggleModal();
@@ -88,6 +93,7 @@ export default class Main extends React.Component {
             <View style={styles.container}>
                 {/* <Navbar /> */}
                 <ViewProject
+                  overlayHandler={this.overlayHandler}
                   projectData={this.state.projectData}
                   ref={ref => this.projectModal = ref}
                 />
@@ -120,6 +126,9 @@ export default class Main extends React.Component {
                         }) : (this.state.refreshing ? <Text></Text> : <Placeholder />)
                     }
                 </ScrollView>
+                {
+                  this.state.overlay ? <View style={styles.overlay}></View> : null
+                }
                 <Footer 
                   setModalVisible={(boolVal) => this.setModalVisible(boolVal)}
                   navigation={this.props.navigation}
@@ -159,4 +168,11 @@ const styles = StyleSheet.create({
       borderTopWidth: 2,
       borderTopColor: '#ededed',
     },
+    overlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'black',
+      opacity: 0.5,
+    }
 });

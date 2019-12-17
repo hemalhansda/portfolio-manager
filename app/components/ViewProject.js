@@ -37,6 +37,7 @@ class ViewProject extends React.Component {
     }
 
     toggleModal = () => {
+        this.props.overlayHandler(true);
         this.setState({
             image: {
                 uri: this.props.projectData.imageUrl
@@ -51,6 +52,7 @@ class ViewProject extends React.Component {
     }
 
     closeModal = () => {
+        this.props.overlayHandler(false);
         Animated.spring(this.state.top, {
             toValue: screenHeight
         }).start();
