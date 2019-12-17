@@ -163,5 +163,6 @@ const styles = StyleSheet.create({
     },
     selected: {
         backgroundColor: '#f0edf5',
+        borderRadius: 20,
     }
 });
