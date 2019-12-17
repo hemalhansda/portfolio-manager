@@ -19,6 +19,7 @@ import Placeholder from './Placeholder';
 import Navbar from './Navbar';
 import { PermissionsAndroid } from 'react-native';
 import Footer from './Footer';
+import ViewProject from '../components/ViewProject';
 
 export default class Main extends React.Component {
     static navigationOptions = {
@@ -38,6 +39,8 @@ export default class Main extends React.Component {
           projectList: [],
           modalVisible: false,
           refreshing: false,
+          viewProjectHandler: false,
+          projectData: {},
         };
     }
 
@@ -75,10 +78,20 @@ export default class Main extends React.Component {
       this.props.navigation.navigate('Edit', params);
     };
 
+    viewProject = (projectData) => {
+      this.setState({projectData: projectData}, () => {
+        this.projectModal.toggleModal();
+      });
+    };
+
     render() {
         return(
             <View style={styles.container}>
                 {/* <Navbar /> */}
+                <ViewProject
+                  projectData={this.state.projectData}
+                  ref={ref => this.projectModal = ref}
+                />
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -100,6 +113,7 @@ export default class Main extends React.Component {
                         this.state.projectList.length ? this.state.projectList.map((eachProject) => {
                             return <Project 
                               key={eachProject._id}
+                              viewProject={this.viewProject}
                               eachProject={eachProject}
                               editMethod={this.editMethod}
                               deleteMethod={this.deleteMethod}

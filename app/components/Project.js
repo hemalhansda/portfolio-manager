@@ -22,25 +22,27 @@ export default class Project extends React.Component {
 
     render() {
         return (
-            <Card style={styles.note}>
-                <Text style={styles.noteTextTitle}>{this.props.eachProject.title}</Text>
-                <Text style={styles.noteText}>
-                    {this.props.eachProject.description}
-                </Text>
+            <TouchableOpacity onPress={() => this.props.viewProject(this.props.eachProject)}>
+                <Card style={styles.note}>
+                    <Text style={styles.noteTextTitle}>{this.props.eachProject.title}</Text>
+                    <Text style={styles.noteText}>
+                        {this.props.eachProject.description}
+                    </Text>
 
-                <View style={styles.controls}>
-                    <TouchableOpacity onPress={() => this.props.editMethod(this.props.eachProject)} style={styles.noteEdit}>
-                        <View style={styles.innerTextBut}>
-                            <Image style={styles.iconStyle} source={editIcon}></Image>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.eachProject._id)} style={styles.noteDelete}>
-                        <View style={styles.innerTextBut}>
-                            <Image style={styles.iconStyle} source={deleteIcon}></Image>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </Card>
+                    <View style={styles.controls}>
+                        <TouchableOpacity onPress={() => this.props.editMethod(this.props.eachProject)} style={styles.noteEdit}>
+                            <View style={styles.innerTextBut}>
+                                <Image style={styles.iconStyle} source={editIcon}></Image>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.eachProject._id)} style={styles.noteDelete}>
+                            <View style={styles.innerTextBut}>
+                                <Image style={styles.iconStyle} source={deleteIcon}></Image>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </Card>
+            </TouchableOpacity>
         );
     }
 }
