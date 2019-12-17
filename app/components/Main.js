@@ -109,6 +109,7 @@ export default class Main extends React.Component {
                 </ScrollView>
                 <Footer 
                   setModalVisible={(boolVal) => this.setModalVisible(boolVal)}
+                  navigation={this.props.navigation}
                 />
             </View>
         );

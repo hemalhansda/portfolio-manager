@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 
 import { Card } from 'react-native-shadow-cards';
-import homeIcon from '../assets/images/home.png';
+import workIcon from '../assets/images/portfolio.png';
 import dashboardIcon from '../assets/images/dashboard.png';
 import shuffleIcon from '../assets/images/shuffle.png';
-import accountIcon from '../assets/images/account.png';
+import accountIcon from '../assets/images/gear-option.png';
 
 export default class Footer extends React.Component {
     constructor(props) {
@@ -29,14 +29,14 @@ export default class Footer extends React.Component {
             <Card style={styles.statusBar}>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.setModalVisible(true);
+                        this.props.navigation.navigate('WorkOn');
                     }}
                     style={styles.homeBtn}>
-                    <Image style={styles.icon} source={homeIcon}/>
+                    <Image style={styles.icon} source={workIcon}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.setModalVisible(true);
+                        this.props.navigation.navigate('Dashboard');
                     }}
                     style={styles.introEditBtn}>
                     <Image style={styles.icon} source={dashboardIcon}/>
@@ -52,14 +52,14 @@ export default class Footer extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.setModalVisible(true);
+                        this.props.navigation.navigate('Shuffle');
                     }}
                     style={styles.shuffleBtn}>
                     <Image style={styles.icon} source={shuffleIcon}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.setModalVisible(true);
+                        this.props.navigation.navigate('Settings');
                     }}
                     style={styles.accBtn}>
                     <Image style={styles.icon} source={accountIcon}/>
