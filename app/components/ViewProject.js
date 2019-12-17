@@ -34,7 +34,6 @@ class ViewProject extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('projectData: ', this.props.projectData);
     }
 
     toggleModal = () => {
