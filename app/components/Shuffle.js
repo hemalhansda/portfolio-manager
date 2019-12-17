@@ -16,54 +16,12 @@ import Footer from './Footer';
 const window = Dimensions.get('window');
 
 const { width, height } = Dimensions.get('window');
-
-
-const data = {
-  0: {
-    image: 'https://placekitten.com/200/240',
-    text: 'Chloe',
-  },
-  1: {
-    image: 'https://placekitten.com/200/201',
-    text: 'Jasper',
-  },
-  2: {
-    image: 'https://placekitten.com/200/202',
-    text: 'Pepper',
-  },
-  3: {
-    image: 'https://placekitten.com/200/203',
-    text: 'Oscar',
-  },
-  4: {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty',
-  },
-  5: {
-    image: 'https://placekitten.com/200/205',
-    text: 'Spooky',
-  },
-  6: {
-    image: 'https://placekitten.com/200/210',
-    text: 'Kiki',
-  },
-  7: {
-    image: 'https://placekitten.com/200/215',
-    text: 'Smokey',
-  },
-  8: {
-    image: 'https://placekitten.com/200/220',
-    text: 'Gizmo',
-  },
-  9: {
-    image: 'https://placekitten.com/220/239',
-    text: 'Kitty',
-  },
-};
+import Rest from '../services/Rest';
+import Placeholder from './Placeholder';
 
 export default class Shuffle extends Component {
   static navigationOptions = {
-    title: 'Rearrange Project Order',
+    title: 'Re-Arrange Project Order',
     headerStyle: {
       backgroundColor: '#614e7a',
     },
@@ -72,21 +30,52 @@ export default class Shuffle extends Component {
       fontWeight: 'bold',
     },
   };
-  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectListObj: {},
+      loader: true,
+    };
+  }
+
   componentDidMount() {
     this.footer.setState({shuffle: true, home: false});
+    Rest.getAllProjects().then((res) => {
+      const projectList = res.data.data;
+      const projectListObj = this.convertArrayToObject(projectList, 'title');
+      this.setState({projectListObj: projectListObj, loader: false});
+    });
   }
+
+  convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.extender}>
-          <Text style={styles.title}>React Native Sortable List</Text>
-          <SortableList
-            style={styles.list}
-            contentContainerStyle={styles.contentContainer}
-            data={data}
-            renderRow={this._renderRow} />
+          {/* <Text style={styles.title}>Projects Sortable List</Text> */}
+          {
+            this.state.loader === false
+            ? <SortableList
+              style={styles.list}
+              contentContainerStyle={styles.contentContainer}
+              data={this.state.projectListObj}
+              renderRow={this._renderRow} />
+            : <View style={styles.list}>
+                <Placeholder
+                  styleContents={{ width: 350, margin: 10, height: 90, borderRadius: 5 }}
+                />
+              </View>
+          }
         </View>
         <Footer
           ref={ref => this.footer = ref}
@@ -157,8 +146,8 @@ class Row extends Component {
         styles.row,
         this._style,
       ]}>
-        <Image source={{uri: data.image}} style={styles.image} />
-        <Text style={styles.text}>{data.text}</Text>
+        <Image source={{uri: data.imageUrl}} style={styles.image} />
+        <Text style={styles.text}>{data.title}</Text>
       </Animated.View>
     );
   }
@@ -185,10 +174,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 20,
     color: '#999999',
+    marginLeft: 40,
+    marginRight: 40,
   },
 
   list: {
     flex: 1,
+    marginTop: 20,
   },
 
   contentContainer: {
@@ -237,7 +229,7 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    marginRight: 30,
+    marginRight: 15,
     borderRadius: 25,
   },
 
