@@ -143,7 +143,7 @@ export default class CreateProject extends React.Component {
                         style={styles.textarea}
                         onChangeText={(text) => this.setState({description: text, errMsg: false})}
                         // defaultValue={this.state.text}
-                        maxLength={120}
+                        maxLength={300}
                         placeholderTextColor={'#c7c7c7'}
                         underlineColorAndroid={'transparent'}
                         placeholder="Enter the description"></Textarea>
