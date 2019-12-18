@@ -70,8 +70,7 @@ export default class Shuffle extends Component {
     });
     const shuffleQuery = { orders: shuffler };
     Rest.shuffleProject(shuffleQuery).then((res) => {
-      // console.log('res: ', res.data.data);
-      // this.footer.setState({refreshHome: true});
+      this.props.navigation.state.params.getAllProjects();
     });
   };
 

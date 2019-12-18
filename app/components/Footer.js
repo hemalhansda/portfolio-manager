@@ -28,7 +28,6 @@ export default class Footer extends React.Component {
             shuffle: false,
             settings: false,
             home: true,
-            refreshHome: false,
         };
     }
 
@@ -70,7 +69,7 @@ export default class Footer extends React.Component {
                 }
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.navigation.navigate('Shuffle');
+                        this.props.navigation.navigate('Shuffle', { getAllProjects: () => this.props.getAllProjects() });
                     }}
                     style={[styles.shuffleBtn, (this.state.shuffle ? styles.selected : null)]}>
                     <Image style={styles.icon} source={shuffleIcon}/>

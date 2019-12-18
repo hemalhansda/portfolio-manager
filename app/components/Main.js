@@ -46,13 +46,6 @@ export default class Main extends React.Component {
         };
     }
 
-    // componentDidUpdate() {
-    //   if (this.footer.state.refreshHome) {
-    //     this.footer.setState({refreshHome: false});
-    //     this.getAllProjects();
-    //   }
-    // }
-
     componentDidMount() {
       this.getAllProjects();
     }
@@ -142,6 +135,7 @@ export default class Main extends React.Component {
                   ref={ref => this.footer = ref}
                   setModalVisible={(boolVal) => this.setModalVisible(boolVal)}
                   navigation={this.props.navigation}
+                  getAllProjects={this.getAllProjects}
                 />
             </View>
         );
