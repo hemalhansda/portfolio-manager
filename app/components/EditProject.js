@@ -8,7 +8,10 @@ import {
     Alert,
     TextInput,
     Button,
+    Animated,
 } from 'react-native';
+
+import styled from 'styled-components';
 
 import Textarea from 'react-native-textarea';
 import { Card } from 'react-native-shadow-cards';
@@ -43,6 +46,7 @@ export default class EditProject extends React.Component {
             titleChng: false,
             descriptionChng: false,
             imageChng: false,
+            left: new Animated.Value(900),
         };
     }
 
@@ -114,6 +118,9 @@ export default class EditProject extends React.Component {
 
     componentDidMount() {
         this.getPermissionAsync();
+        Animated.spring(this.state.left, {
+            toValue: 0
+        }).start();
     }
 
     constructProject = async () => {
@@ -151,7 +158,7 @@ export default class EditProject extends React.Component {
 
     render() {
         return (
-            <View style={styles.formContainer}>
+            <AnimatedContainer style={{ top: this.state.left }}>
                 <Card style={styles.subForm}>
                     <Text>T I T L E</Text>
                     <TextInput 
@@ -207,10 +214,23 @@ export default class EditProject extends React.Component {
                             />
                     }
                 </View>
-            </View>
+            </AnimatedContainer>
         );
     }
 }
+
+const Container = styled.View`
+    position: absolute;
+    background: #f7f7f7;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    padding: 20px;
+    display: flex;
+    alignItems: center;
+`;
+
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const styles = StyleSheet.create({
     cardImage: {
@@ -287,7 +307,6 @@ const styles = StyleSheet.create({
         margin: 40,
         borderRadius: 5,
         position: 'absolute',
-        bottom: 0,
     },
     textareaContainer: {
         height: 100,
@@ -310,7 +329,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 150,
         height: 50,
-        bottom: 0,
+        bottom: 15,
         margin: 'auto',
         backgroundColor: '#454545',
         flex: 1,
